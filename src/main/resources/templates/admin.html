@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Sonic</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <header>
+        <h1>Gerenciar Catálogo</h1>
+        <a th:href="@{/cadastroJogo}" class="btn-novo">+ Novo Jogo</a>
+    </header>
+    
+    <main class="container-admin">
+        <table class="tabela-crud">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Capa</th>
+                    <th>Nome do Jogo</th>
+                    <th>Ano</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="jogo : ${jogos}">
+                    
+                    <td th:text="${jogo.id}">ID</td>
+                    
+                    <td>
+                        <img th:src="${jogo.urlImagem}" alt="Capa" style="width: 60px; border-radius: 5px;">
+                    </td>
+
+                    <td th:text="${jogo.nmJogo}">Nome do Jogo</td>
+                    <td th:text="${jogo.anoLancamento}">Ano</td>
+                    
+                    <td>
+                        <button class="btn-editar">Editar</button>
+                        <button class="btn-excluir">Excluir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

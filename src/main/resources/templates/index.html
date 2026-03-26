@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Sonic</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{js/index.js}"></script>
+</head>
+<body>
+<header class="header-principal">
+        <h1>Catálogo de Jogos: Sonic the Hedgehog</h1>
+        <a th:href="@{/login}" class="btn-login-topo">Área do Admin</a>
+    </header>
+    
+    <main id="galeria-jogos">
+        <div class="card-jogo" th:each="jogo : ${jogos}">
+            
+            <img th:src="${jogo.urlImagem}" alt="Capa do Jogo">
+            
+            <h2 th:text="${jogo.nmJogo}">Nome do Jogo</h2>
+            
+            <p><strong>Ano:</strong> <span th:text="${jogo.anoLancamento}">1991</span></p>
+            
+            <button class="btn-detalhes">Ver Mais</button>
+        </div>
+    </main>
+</body>
+</html>

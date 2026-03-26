@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Jogo</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Salvar Jogo</h2>
+        </div>
+
+        <form id="form-crud" th:action="@{/cadastroJogo}" th:object="${jogo}" method="POST">           
+            <input type="hidden" th:field="*{id}">
+            <div class="input-group">
+                <label for="nm_jogo">Nome do Jogo</label>
+                <input type="text" id="nm_jogo" th:field="*{nmJogo}" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="ano_lancamento">Ano de Lançamento</label>
+                <input type="number" id="ano_lancamento" th:field="*{anoLancamento}" required>
+            </div>
+
+            <div class="input-group">
+                <label for="url_imagem">Link da Capa (URL)</label>
+                <input type="text" id="url_imagem" th:field="*{urlImagem}" placeholder="Ex: https://site.com/foto.jpg" required>
+            </div>
+
+            <button type="submit" class="btn-login">Salvar Jogo</button>
+        </form>
+        
+        <div class="login-footer">
+            <a th:href="@{/admin}">Cancelar e voltar</a>
+        </div>
+    </div>
+</body>
+</html>

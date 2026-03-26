@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Catálogo Sonic</title>
+    <link rel="stylesheet" th:href="@{css/index.css}">
+    <!-- <script th:src="@{js/login.js}"></script> -->
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Acesso ao Sistema</h2>
+            <p>Gerenciamento do Catálogo</p>
+        </div>
+
+            <form id="form-login" th:action="@{/admin}" method="GET">
+            <div class="input-group">
+                <label for="nm_usuario">Usuário</label>
+                <input type="text" id="nm_usuario" name="nm_usuario" placeholder="Digite seu usuário" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+        
+        <div class="login-footer">
+            <a th:href="@{/}">Voltar para o catálogo</a>
+        </div>
+    </div>
+
+</body>
+</html>
