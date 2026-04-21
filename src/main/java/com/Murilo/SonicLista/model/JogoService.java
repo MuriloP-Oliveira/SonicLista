@@ -1,6 +1,6 @@
 package com.Murilo.SonicLista.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,14 @@ public class JogoService {
     public void inserirJogo(Jogo jogo){
         jogoDAO.inserirJogo(jogo);
     }
-
-    public ArrayList<Jogo> listarJogos(){
+    public List<Jogo> listarJogos(){
         return jogoDAO.listarJogos();
     }
+    public Jogo buscarJogoPorId(String id) {
+        return jogoDAO.buscarJogoPorId(id);
+    }
 
-    public Jogo mostrarJogo(String uuid){
-        return jogoDAO.mostrarJogo(uuid);
+    public void atualizarJogo(Jogo jogo) {
+        jogoDAO.atualizarJogo(jogo);
     }
 }

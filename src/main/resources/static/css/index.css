@@ -5,11 +5,11 @@ body {
 }
 
 header {
-    background-color: #0033cc;
+    background-color: #0033cc; /* Azul Sonic */
     color: white;
     text-align: center;
     padding: 1.5rem;
-    border-bottom: 5px solid #cc0000; 
+    border-bottom: 5px solid #cc0000; /* Vermelho dos tênis */
 }
 
 #galeria-jogos {
@@ -82,7 +82,7 @@ header {
     background-color: #e0e6ed;
 }
 
-/* Estilos página de login */
+/* Estilos específicos para a página de login */
 .login-page {
     display: flex;
     justify-content: center;
@@ -132,7 +132,7 @@ header {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; 
+    box-sizing: border-box; /* Garante que o padding não quebre a largura */
 }
 
 .btn-login {
@@ -211,9 +211,9 @@ header {
 }
 
 .btn-editar {
-    background-color: #f39c12; 
+    background-color: #f39c12; /* Laranja Tails */
 }
 
 .btn-excluir {
-    background-color: #cc0000; 
+    background-color: #cc0000; /* Vermelho Knuckles */
 }
