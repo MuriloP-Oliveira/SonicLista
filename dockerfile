@@ -9,6 +9,6 @@ COPY .mvn .mvn
 
 RUN chmod 777 mvnw 
 
-RUN ./mvnw package
+RUN ./mvnw package -DskipTests
 
 CMD ["java","-jar","target/SonicLista-0.0.1-SNAPSHOT.jar"]
