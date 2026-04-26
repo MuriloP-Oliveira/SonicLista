@@ -361,7 +361,7 @@ header {
     z-index: 9999; 
     pointer-events: none;
     transform: translateX(100%); 
-    animation: correrPraEsquerda 1.2s linear forwards; 
+    animation: correrPraEsquerda 1s linear forwards; 
 }
 
 @keyframes correrPraEsquerda {
@@ -371,4 +371,150 @@ header {
     100% { 
         transform: translateX(calc(-100vw - 300px)); 
     }
+}
+
+/* =========================================
+   9. RESPONSIVIDADE (MOBILE E TABLETS)
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* --- HOME --- */
+    
+    .header-principal {
+        flex-direction: column;
+        gap: 15px; 
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .busca-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filtros-era {
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 8px; 
+    }
+
+    .form-busca input[type="text"] {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .form-busca input[type="text"]:focus {
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    #galeria-jogos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px; 
+        padding: 10px;
+    }
+
+    .card-jogo {
+        width: 100%;
+        max-width: none;
+        margin: 0; 
+        padding: 8px;
+        box-sizing: border-box; 
+    }
+
+    .card-jogo img {
+        height: 120px;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .card-jogo h2 {
+        font-size: 0.9em;
+        margin: 8px 0 4px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-jogo p {
+        font-size: 0.75em;
+        margin: 0 0 8px 0;
+    }
+
+    .btn-detalhes {
+        padding: 6px;
+        font-size: 0.8em;
+        width: 100%;
+    }
+
+    /* --- ADMIN --- */
+    
+    .header-admin {
+        padding: 15px 10px !important;
+    }
+    
+    .header-admin-top {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .header-admin-top h1 {
+        font-size: 1.2em;
+    }
+
+    .container-admin {
+        overflow-x: auto;
+        padding: 10px;
+    }
+
+    .tabela-crud {
+        font-size: 0.9em;
+    }
+}
+
+/* =========================================
+   FUNDOS ESCURECIDOS (HOME E ADMIN)
+   ========================================= */
+
+.bg-home {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+        url('../img/fundo-home.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.bg-admin {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+        url('../img/fundo-admin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.mensagem-vazia {
+    background-color: rgba(0, 51, 204, 0.7); 
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #00aaff;
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    margin: 50px auto 20px auto;
+    grid-column: 1 / -1;
+    width: 90%;
+}
+
+.mensagem-vazia h2 {
+    margin-top: 0;
+    color: #f39c12;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

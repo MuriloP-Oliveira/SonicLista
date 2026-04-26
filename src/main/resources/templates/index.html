@@ -6,7 +6,7 @@
     <title>Catálogo Sonic</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
-<body>
+<body class="bg-home">
 <header class="header-principal">
         <h1>Catálogo de Jogos: Sonic the Hedgehog</h1>
         
@@ -30,7 +30,7 @@
     
     <main id="galeria-jogos">
         
-        <div th:if="${jogos.empty}" style="text-align: center; width: 100%; margin-top: 50px; color: rgb(0, 0, 0);">
+        <div th:if="${jogos.empty}" class="mensagem-vazia">
             <h2>Pronto para a aventura?</h2>
             <p>Utilize a barra de pesquisa acima para encontrar os jogos no catálogo!</p>
         </div>
