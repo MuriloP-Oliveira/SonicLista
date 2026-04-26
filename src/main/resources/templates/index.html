@@ -5,25 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo Sonic</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
-    <script th:src="@{js/index.js}"></script>
 </head>
 <body>
 <header class="header-principal">
         <h1>Catálogo de Jogos: Sonic the Hedgehog</h1>
+        
+    <div class="busca-container">
+        <div class="filtros-era">
+            <span style="color: white; font-weight: bold;">Filtrar por Era:</span>
+            <a th:href="@{/(era='classica')}" class="btn-era">Clássica (91-97)</a>
+            <a th:href="@{/(era='aventura')}" class="btn-era">Aventura (98-08)</a>
+            <a th:href="@{/(era='moderna')}" class="btn-era">Moderna (09-At)</a>
+            <a th:href="@{/}" class="btn-era btn-limpar">Limpar</a>
+        </div>
+
+        <form th:action="@{/}" method="GET" class="form-busca">
+            <input type="text" name="nome" placeholder="Pesquisar pelo nome..." th:value="${param.nome}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
         <a th:href="@{/login}" class="btn-login-topo">Área do Admin</a>
     </header>
     
     <main id="galeria-jogos">
+        
+        <div th:if="${jogos.empty}" style="text-align: center; width: 100%; margin-top: 50px; color: rgb(0, 0, 0);">
+            <h2>Pronto para a aventura?</h2>
+            <p>Utilize a barra de pesquisa acima para encontrar os jogos no catálogo!</p>
+        </div>
+
         <div class="card-jogo" th:each="jogo : ${jogos}">
-            
             <img th:src="${jogo.urlImagem}" alt="Capa do Jogo">
-            
             <h2 th:text="${jogo.nmJogo}">Nome do Jogo</h2>
-            
             <p><strong>Ano:</strong> <span th:text="${jogo.anoLancamento}">1991</span></p>
-            
             <button class="btn-detalhes">Ver Mais</button>
         </div>
+
     </main>
+
+    <img th:if="${param.nome != null or param.era != null}" 
+         th:src="@{/img/sonic-correndo.gif}" 
+         class="sonic-animacao" 
+         alt="Sonic passando rápido!">
 </body>
 </html>

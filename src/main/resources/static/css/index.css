@@ -1,17 +1,137 @@
+/* =========================================
+   1. RESET E CONFIGURAÇÕES GERAIS
+   ========================================= */
 body {
     font-family: Arial, sans-serif;
     background-color: #e0e6ed;
     margin: 0;
 }
 
+/* =========================================
+   2. CABEÇALHO PRINCIPAL (HOME)
+   ========================================= */
 header {
-    background-color: #0033cc; /* Azul Sonic */
+    background-color: #0033cc; 
     color: white;
     text-align: center;
     padding: 1.5rem;
-    border-bottom: 5px solid #cc0000; /* Vermelho dos tênis */
+    border-bottom: 5px solid #cc0000; 
 }
 
+.header-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: #0033cc;
+    color: white;
+    border-bottom: 5px solid #cc0000;
+}
+
+.header-principal h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.btn-login-topo {
+    background-color: white;
+    color: #0033cc;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-login-topo:hover {
+    background-color: #e0e6ed;
+}
+
+/* =========================================
+   3. BARRA DE BUSCA E FILTROS (HOME)
+   ========================================= */
+.busca-container {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+    gap: 40px; 
+}
+
+.filtros-era {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: white;
+}
+
+.btn-era {
+    padding: 8px 15px;
+    background-color: #004a99; 
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.85em;
+    border: 1px solid #00aaff;
+    transition: 0.3s;
+}
+
+.btn-era:hover {
+    background-color: #00aaff;
+    transform: translateY(-2px);
+}
+
+.btn-limpar {
+    background-color: #555;
+    border-color: #888;
+}
+
+.btn-limpar:hover {
+    background-color: #cc0000;
+}
+
+.form-busca {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.form-busca input[type="text"] {
+    padding: 10px 15px;
+    border: 2px solid white;
+    border-radius: 25px;
+    outline: none;
+    font-size: 0.95em;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.form-busca input[type="text"]:focus {
+    width: 300px; 
+    border-color: #f39c12;
+    box-shadow: 0 0 8px rgba(243, 156, 18, 0.5);
+}
+
+.form-busca button {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-busca button:hover {
+    background-color: #990000;
+    transform: scale(1.05);
+}
+
+/* =========================================
+   4. GALERIA DE JOGOS (HOME)
+   ========================================= */
 #galeria-jogos {
     display: flex;
     flex-wrap: wrap;
@@ -53,42 +173,16 @@ header {
 .btn-detalhes:hover {
     background-color: #990000;
 }
-.header-principal {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    background-color: #0033cc;
-    color: white;
-    border-bottom: 5px solid #cc0000;
-}
 
-.header-principal h1 {
-    margin: 0;
-    font-size: 1.5em;
-}
-
-.btn-login-topo {
-    background-color: white;
-    color: #0033cc;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.btn-login-topo:hover {
-    background-color: #e0e6ed;
-}
-
-/* Estilos específicos para a página de login */
+/* =========================================
+   5. PÁGINA DE LOGIN
+   ========================================= */
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #0033cc; /* Fundo azul clássico */
+    background-color: #0033cc;
 }
 
 .login-container {
@@ -98,7 +192,7 @@ header {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     width: 100%;
     max-width: 350px;
-    border-top: 5px solid #cc0000; /* Detalhe vermelho */
+    border-top: 5px solid #cc0000;
 }
 
 .login-header {
@@ -132,7 +226,7 @@ header {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não quebre a largura */
+    box-sizing: border-box;
 }
 
 .btn-login {
@@ -166,11 +260,40 @@ header {
 .login-footer a:hover {
     text-decoration: underline;
 }
-/* Estilos do Painel Admin */
-.container-admin {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+
+/* =========================================
+   6. CABEÇALHO DO PAINEL ADMIN
+   ========================================= */
+.header-admin {
+    background-color: #0033cc;
+    padding: 20px 40px; 
+    border-bottom: 5px solid #cc0000; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    height: auto; 
+    min-height: auto; 
+}
+
+.header-admin-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-voltar-home {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    border: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.btn-voltar-home:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-novo {
@@ -182,6 +305,15 @@ header {
     border-radius: 5px;
     display: inline-block;
     margin-top: 10px;
+}
+
+/* =========================================
+   7. PAINEL ADMIN: TABELA E BOTÕES
+   ========================================= */
+.container-admin {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .tabela-crud {
@@ -211,9 +343,32 @@ header {
 }
 
 .btn-editar {
-    background-color: #f39c12; /* Laranja Tails */
+    background-color: #f39c12; 
 }
 
 .btn-excluir {
-    background-color: #cc0000; /* Vermelho Knuckles */
+    background-color: #cc0000; 
+}
+
+/* =========================================
+   8. ANIMAÇÃO DO SONIC CORRENDO
+   ========================================= */
+.sonic-animacao {
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    width: 250px;
+    z-index: 9999; 
+    pointer-events: none;
+    transform: translateX(100%); 
+    animation: correrPraEsquerda 1.2s linear forwards; 
+}
+
+@keyframes correrPraEsquerda {
+    0% { 
+        transform: translateX(100%); 
+    }
+    100% { 
+        transform: translateX(calc(-100vw - 300px)); 
+    }
 }

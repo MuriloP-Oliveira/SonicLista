@@ -24,4 +24,13 @@ public class JogoService {
     public void atualizarJogo(Jogo jogo) {
         jogoDAO.atualizarJogo(jogo);
     }
+    public void excluirJogo(String uuid) {
+        jogoDAO.excluirJogo(uuid);
+    }
+    public List<Jogo> pesquisarJogos(String nome) {
+        return jogoDAO.pesquisarJogos(nome);
+    }
+    public List<Jogo> pesquisarPorEra(int anoInicio, int anoFim) {
+        return jogoDAO.pesquisarPorEra(anoInicio, anoFim);
+    }
 }

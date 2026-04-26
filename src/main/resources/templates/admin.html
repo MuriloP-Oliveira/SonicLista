@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Sonic</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
-    <header>
-        <h1>Gerenciar Catálogo</h1>
-        <a th:href="@{/cadastroJogo}" class="btn-novo">+ Novo Jogo</a>
+    <header class="header-admin">
+        <div class="header-admin-top">
+             <a th:href="@{/}" class="btn-voltar-home">← Sair do Admin</a>
+             <h1>Gerenciar Catálogo</h1>
+             <a th:href="@{/cadastroJogo}" class="btn-novo">+ Novo Jogo</a>
+        </div>
     </header>
     
     <main class="container-admin">
@@ -37,7 +41,7 @@
                     
                     <td>
                         <a th:href="@{/editar/{id}(id=${jogo.id})}" class="btn-editar" style="text-decoration: none; display: inline-block; text-align: center;">Editar</a>
-                        <button class="btn-excluir">Excluir</button>
+                        <a th:href="@{/excluir/{id}(id=${jogo.id})}" class="btn-excluir" style="text-decoration: none; display: inline-block; text-align: center;">Excluir</a>
                     </td>
                 </tr>
             </tbody>
