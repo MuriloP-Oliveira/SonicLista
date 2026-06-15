@@ -1,13 +1,12 @@
 // Aguarda o HTML carregar
 document.addEventListener("DOMContentLoaded", function() {
-    
-    const botoesExcluir = document.querySelectorAll('.btn-excluir');
-    botoesExcluir.forEach(function(botao) {
-        botao.addEventListener('click', function(evento) {
-            evento.preventDefault();
-            const urlExclusao = this.getAttribute('href');
-            if (confirm("Tem certeza que deseja excluir este jogo?")) {
-                window.location.href = urlExclusao;
+
+    const formsExcluir = document.querySelectorAll('.form-excluir');
+    formsExcluir.forEach(function(form) {
+        form.addEventListener('submit', function(evento) {
+            const confirmacao = confirm("Tem certeza que deseja excluir este jogo? Essa ação não pode ser desfeita.");
+            if (!confirmacao) {
+                evento.preventDefault(); 
             }
         });
     });

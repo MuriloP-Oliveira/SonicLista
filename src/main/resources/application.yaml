@@ -1,7 +1,11 @@
 server:
-  port: 8080
+  port: 5432
 
 spring:
+  session:
+    jdbc:
+      initialize-schema: always
+
   datasource:
     platform: postgres
     url: ${SPRING_DATASOURCE_URL}

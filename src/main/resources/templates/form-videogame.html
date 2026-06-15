@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Console</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Cadastrar Console</h2>
+            <p>Adicione um novo videogame ao banco de dados</p>
+        </div>
+
+        <form th:action="@{/videogame/cadastrar}" method="post" th:object="${videoGame}">
+            
+            <div class="input-group">
+                <label>Nome do Console</label>
+                <input type="text" th:field="*{nome}" placeholder="Ex: Mega Drive" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Empresa</label>
+                <input type="text" th:field="*{empresa}" placeholder="Ex: SEGA" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Geração</label>
+                <input type="text" th:field="*{geracao}" placeholder="Ex: 16-bits">
+            </div>
+            
+            <button type="submit" class="btn-login">Salvar Console</button>
+        </form>
+        
+        <div class="login-footer">
+            <a th:href="@{/videogame/listar}">Ver consoles cadastrados</a> | <a th:href="@{/admin}">Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+</html>

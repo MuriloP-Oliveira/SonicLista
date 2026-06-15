@@ -10,9 +10,14 @@
 <body class="bg-admin">
     <header class="header-admin">
         <div class="header-admin-top">
-             <a th:href="@{/}" class="btn-voltar-home">← Sair do Admin</a>
+             <a th:href="@{/logout}" class="btn-voltar-home">← Sair e Encerrar Sessão</a>
              <h1>Gerenciar Catálogo</h1>
-             <a th:href="@{/cadastroJogo}" class="btn-novo">+ Novo Jogo</a>
+             <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                 <a th:href="@{/videogame/listar}" class="btn-novo" style="background-color: #00aaff; border-color: #00aaff; color: white;">Ver Consoles</a>
+                 <a th:href="@{/videogame/cadastrar}" class="btn-novo" style="background-color: #27ae60; border-color: #27ae60; color: white;">+ Novo Console</a>
+                 <a th:href="@{/videogame/atribuir}" class="btn-novo" style="background-color: #f39c12; border-color: #f39c12; color: white;">Vincular Plataforma</a>
+                 <a th:href="@{/cadastroJogo}" class="btn-novo">+ Novo Jogo</a>
+             </div>
         </div>
     </header>
     
@@ -24,7 +29,7 @@
                     <th>Capa</th>
                     <th>Nome do Jogo</th>
                     <th>Ano</th>
-                    <th>Ações</th>
+                    <th>Plataformas</th> <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,8 +45,17 @@
                     <td th:text="${jogo.anoLancamento}">Ano</td>
                     
                     <td>
+                        <span th:if="${#lists.isEmpty(jogo.videoGames)}" style="color: #888; font-style: italic;">Nenhuma</span>
+                        <span th:unless="${#lists.isEmpty(jogo.videoGames)}" th:each="vg, iter : ${jogo.videoGames}">
+                            <span th:text="${vg.nome}"></span><span th:if="${!iter.last}">, </span>
+                        </span>
+                    </td>
+                    
+                    <td>
                         <a th:href="@{/editar/{id}(id=${jogo.id})}" class="btn-editar" style="text-decoration: none; display: inline-block; text-align: center;">Editar</a>
-                        <a th:href="@{/excluir/{id}(id=${jogo.id})}" class="btn-excluir" style="text-decoration: none; display: inline-block; text-align: center;">Excluir</a>
+                        <form th:action="@{/excluir/{id}(id=${jogo.id})}" method="post" class="form-excluir" style="display: inline-block;">
+                            <input class="btn-excluir" style="text-decoration: none; text-align: center; cursor: pointer;" type="submit" value="Deletar">
+                        </form>
                     </td>
                 </tr>
             </tbody>

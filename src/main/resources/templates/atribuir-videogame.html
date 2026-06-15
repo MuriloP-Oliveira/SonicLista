@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Atribuir Jogo a Video Game</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body class="bg-admin">
+    <div class="login-container" style="margin: 50px auto;">
+        <div class="login-header">
+            <h2>Atribuir Plataforma</h2>
+            <p>Vincule um jogo do Sonic ao seu console original</p>
+        </div>
+        
+        <form action="#" th:action="@{/videogame/atribuir}" method="post">
+            <div class="input-group">
+                <label>Video Game (Console)</label>
+                <select name="videoGameId" required style="width: 100%; padding: 10px; border-radius: 4px;">
+                    <option value="" disabled selected>Selecione o console</option>
+                    <option th:each="vg : ${videoGames}"
+                            th:value="${vg.id}"
+                            th:text="${vg.nome + ' (' + vg.empresa + ')'}"></option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Jogo do Catálogo</label>
+                <select name="jogoId" required style="width: 100%; padding: 10px; border-radius: 4px;">
+                    <option value="" disabled selected>Selecione um jogo</option>
+                    <option th:each="j : ${jogos}"
+                            th:value="${j.id}"
+                            th:text="${j.nmJogo}"></option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn-login">Vincular</button>
+        </form>
+        
+        <div class="login-footer">
+            <a th:href="@{/admin}">← Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+</html>

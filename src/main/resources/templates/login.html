@@ -13,20 +13,28 @@
             <p>Gerenciamento do Catálogo</p>
         </div>
 
-            <form id="form-login" th:action="@{/admin}" method="GET">
+        <form id="form-login" th:action="@{/login}" method="POST">
+        <div th:if="${param.error}" style="color: #ff4d4d; text-align: center; margin-bottom: 15px; font-weight: bold;">
+            Usuário ou senha incorretos!
+        </div>
+        <div th:if="${param.logout}" style="color: #2ecc71; text-align: center; margin-bottom: 15px; font-weight: bold;">
+            Você saiu do sistema com sucesso.
+        </div>
+
+        <form id="form-login" th:action="@{/login}" method="POST">
             <div class="input-group">
-                <label for="nm_usuario">Usuário</label>
-                <input type="text" id="nm_usuario" name="nm_usuario" placeholder="Digite seu usuário" required>
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
             </div>
             
             <div class="input-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
             </div>
 
             <button type="submit" class="btn-login">Entrar</button>
         </form>
-        
+
         <div class="login-footer">
             <a th:href="@{/}">Voltar para o catálogo</a>
         </div>

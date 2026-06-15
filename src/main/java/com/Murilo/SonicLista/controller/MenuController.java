@@ -1,9 +1,18 @@
 package com.Murilo.SonicLista.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +20,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Murilo.SonicLista.model.Jogo;
 import com.Murilo.SonicLista.model.JogoService;
+import com.Murilo.SonicLista.model.VideoGame;
+import com.Murilo.SonicLista.model.VideoGameService;
 
 @Controller
 public class MenuController {
 
+    // Pasta onde as imagens serão salvas no seu projeto
+    private static final String UPLOAD_DIR = "./uploads";
+
     @Autowired
     JogoService jogoService;
+
+    @Autowired
+    VideoGameService videoGameService;
 
     @GetMapping("/login")
     public String login(){
@@ -39,9 +57,31 @@ public class MenuController {
         return "form-jogo";
     }
 	
+    // Rota POST atualizada para receber o MultipartFile da imagem
     @PostMapping("/cadastroJogo")
-    public String postJogo(@ModelAttribute Jogo jogo) {
-        if (jogo.getId() == null || jogo.getId().isEmpty()) {
+    public String postJogo(@ModelAttribute Jogo jogo, @RequestParam("file") MultipartFile file) throws IOException {
+        
+        // Se o usuário enviou um arquivo, fazemos o upload
+        if (!file.isEmpty()) {
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            
+            // Cria a pasta "uploads" se ela não existir
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Gera um nome único para não dar conflito se duas imagens tiverem o mesmo nome
+            String nomeArquivo = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path destino = uploadPath.resolve(nomeArquivo);
+            
+            // Copia o arquivo para a pasta local
+            Files.copy(file.getInputStream(), destino);
+
+            // Salva a rota interna da imagem no banco de dados
+            jogo.setUrlImagem("/imagem/" + nomeArquivo);
+        }
+
+        if (jogo.getId() == null) {
             jogoService.inserirJogo(jogo);
         } else {
             jogoService.atualizarJogo(jogo);
@@ -56,10 +96,35 @@ public class MenuController {
         return "form-jogo";
     }
 
-    @GetMapping("/excluir/{id}")
-    public String excluirJogo(@PathVariable String id) {
-        // Agora usa o jogoService diretamente
+    @PostMapping("/excluir/{id}")
+    public String excluirJogo(@PathVariable("id") String id) {
         jogoService.excluirJogo(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/videogame/atribuir")
+    public String formAtribuir(Model model) {
+        model.addAttribute("jogos", jogoService.listarJogos());
+        model.addAttribute("videoGames", videoGameService.listar());
+        return "atribuir-videogame"; 
+    }
+
+    @PostMapping("/videogame/atribuir")
+    public String postAtribuir(@RequestParam String jogoId, @RequestParam UUID videoGameId) {
+        Jogo jogo = jogoService.buscarJogoPorId(jogoId);
+        VideoGame videoGame = videoGameService.buscar(videoGameId);
+
+        if (jogo != null && videoGame != null) {
+            if (jogo.getVideoGames() == null) {
+                jogo.setVideoGames(new ArrayList<>());
+            }
+
+            if (!jogo.getVideoGames().contains(videoGame)) {
+                jogo.getVideoGames().add(videoGame);
+                jogoService.atualizarJogo(jogo);
+            }
+        }
+        
         return "redirect:/admin";
     }
 
@@ -71,11 +136,9 @@ public class MenuController {
         
         List<Jogo> listaDeJogos = new ArrayList<>();
 
-        // Prioridade 1: Busca por Nome
         if (nome != null && !nome.trim().isEmpty()) {
             listaDeJogos = jogoService.pesquisarJogos(nome);
         } 
-        // Prioridade 2: Busca por Era
         else if (era != null && !era.isEmpty()) {
             switch (era) {
                 case "classica":
@@ -85,12 +148,32 @@ public class MenuController {
                     listaDeJogos = jogoService.pesquisarPorEra(1998, 2008);
                     break;
                 case "moderna":
-                    listaDeJogos = jogoService.pesquisarPorEra(2009, 2026); // 2026 para cobrir o futuro próximo
+                    listaDeJogos = jogoService.pesquisarPorEra(2009, 2026); 
                     break;
             }
         }
 
         model.addAttribute("jogos", listaDeJogos);
         return "index";
+    }
+
+    @GetMapping("/imagem/{nomeArquivo}")
+    public ResponseEntity<Resource> serveImagem(@PathVariable String nomeArquivo) throws IOException {
+        Path path = Paths.get(UPLOAD_DIR).resolve(nomeArquivo);
+        
+        if (!Files.exists(path)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = new FileSystemResource(path);
+        String contentType = Files.probeContentType(path);
+        
+        if (contentType == null) {
+            contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
     }
 }

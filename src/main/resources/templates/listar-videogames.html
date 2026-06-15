@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consoles Cadastrados</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/main.js}"></script> 
+</head>
+<body class="bg-admin">
+    <header class="header-admin">
+        <div class="header-admin-top">
+             <a th:href="@{/admin}" class="btn-voltar-home">← Voltar aos Jogos</a>
+             <h1>Consoles Cadastrados</h1>
+             <div>
+                 <a th:href="@{/videogame/atribuir}" class="btn-novo" style="background-color: #f39c12; margin-right: 10px;">Vincular Plataforma</a>
+                 <a th:href="@{/videogame/cadastrar}" class="btn-novo">+ Novo Console</a>
+             </div>
+        </div>
+    </header>
+
+    <main class="container-admin">
+        <table class="tabela-crud">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Console</th>
+                    <th>Empresa</th>
+                    <th>Geração</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vg : ${videoGames}">
+                    
+                    <td th:text="${vg.id}" style="font-size: 0.8em; color: #555;">ID</td>
+                    <td th:text="${vg.nome}">Nome</td>
+                    <td th:text="${vg.empresa}">Empresa</td>
+                    <td th:text="${vg.geracao}">Geração</td>
+                    
+                    <td>
+                        <form th:action="@{'/videogame/' + ${vg.id} + '/deletar'}" method="post" class="form-excluir" style="display: inline-block;">
+                            <input class="btn-excluir" style="text-decoration: none; text-align: center; cursor: pointer;" type="submit" value="Deletar">
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

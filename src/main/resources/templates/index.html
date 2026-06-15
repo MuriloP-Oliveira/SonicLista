@@ -39,6 +39,15 @@
             <img th:src="${jogo.urlImagem}" alt="Capa do Jogo">
             <h2 th:text="${jogo.nmJogo}">Nome do Jogo</h2>
             <p><strong>Ano:</strong> <span th:text="${jogo.anoLancamento}">1991</span></p>
+            
+            <p style="font-size: 0.85em; color: #444; margin-top: -5px; margin-bottom: 10px;">
+                <strong>Consoles:</strong> 
+                <span th:if="${#lists.isEmpty(jogo.videoGames)}">Não informado</span>
+                <span th:unless="${#lists.isEmpty(jogo.videoGames)}" th:each="vg, iter : ${jogo.videoGames}">
+                    <span th:text="${vg.nome}"></span><span th:if="${!iter.last}">, </span>
+                </span>
+            </p>
+
             <button class="btn-detalhes">Ver Mais</button>
         </div>
 

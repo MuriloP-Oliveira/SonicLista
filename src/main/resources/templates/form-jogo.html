@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Jogo</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -11,10 +11,13 @@
     <div class="login-container">
         <div class="login-header">
             <h2>Salvar Jogo</h2>
+            <p>Faça o upload da capa oficial</p>
         </div>
 
-        <form id="form-crud" th:action="@{/cadastroJogo}" th:object="${jogo}" method="POST">           
+        <form id="form-crud" th:action="@{/cadastroJogo}" th:object="${jogo}" method="POST" enctype="multipart/form-data">           
+            
             <input type="hidden" th:field="*{id}">
+            
             <div class="input-group">
                 <label for="nm_jogo">Nome do Jogo</label>
                 <input type="text" id="nm_jogo" th:field="*{nmJogo}" required>
@@ -26,8 +29,8 @@
             </div>
 
             <div class="input-group">
-                <label for="url_imagem">Link da Capa (URL)</label>
-                <input type="text" id="url_imagem" th:field="*{urlImagem}" placeholder="Ex: https://site.com/foto.jpg" required>
+                <label for="file">Capa do Jogo (Imagem)</label>
+                <input type="file" id="file" name="file" accept="image/*" required>
             </div>
 
             <button type="submit" class="btn-login">Salvar Jogo</button>
