@@ -15,9 +15,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
   sql:
     init:
       mode: always
       schema-locations: classpath:schema-postgresql.sql
+  
+  cloudinary:
+  url: ${CLOUDINARY_URL}

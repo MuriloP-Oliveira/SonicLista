@@ -1,18 +1,10 @@
 package com.Murilo.SonicLista.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,14 +22,14 @@ import com.Murilo.SonicLista.model.VideoGameService;
 @Controller
 public class MenuController {
 
-    // Pasta onde as imagens serão salvas no seu projeto
-    private static final String UPLOAD_DIR = "./uploads";
-
     @Autowired
     JogoService jogoService;
 
     @Autowired
     VideoGameService videoGameService;
+
+    @Autowired
+    private com.Murilo.SonicLista.service.CloudinaryService cloudinaryService;
 
     @GetMapping("/login")
     public String login(){
@@ -56,32 +48,31 @@ public class MenuController {
         model.addAttribute("jogo", new Jogo());
         return "form-jogo";
     }
-	
-    // Rota POST atualizada para receber o MultipartFile da imagem
+
     @PostMapping("/cadastroJogo")
-    public String postJogo(@ModelAttribute Jogo jogo, @RequestParam("file") MultipartFile file) throws IOException {
+    public String postJogo(@ModelAttribute Jogo jogo, @RequestParam(value = "file", required = false) MultipartFile file) {
         
-        // Se o usuário enviou um arquivo, fazemos o upload
-        if (!file.isEmpty()) {
-            Path uploadPath = Paths.get(UPLOAD_DIR);
+        if (jogo.getId() != null && !jogo.getId().toString().isEmpty()) {
+            Jogo jogoAntigo = jogoService.buscarJogoPorId(jogo.getId().toString());
             
-            // Cria a pasta "uploads" se ela não existir
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
+            if (jogoAntigo != null) {
+                jogo.setVideoGames(jogoAntigo.getVideoGames());
+                
+                if (file == null || file.isEmpty()) {
+                    jogo.setUrlImagem(jogoAntigo.getUrlImagem());
+                }
             }
-
-            // Gera um nome único para não dar conflito se duas imagens tiverem o mesmo nome
-            String nomeArquivo = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path destino = uploadPath.resolve(nomeArquivo);
-            
-            // Copia o arquivo para a pasta local
-            Files.copy(file.getInputStream(), destino);
-
-            // Salva a rota interna da imagem no banco de dados
-            jogo.setUrlImagem("/imagem/" + nomeArquivo);
         }
 
-        if (jogo.getId() == null) {
+        if (file != null && !file.isEmpty()) {
+            String linkCloudinary = cloudinaryService.fazerUpload(file);
+            
+            if (linkCloudinary != null) {
+                jogo.setUrlImagem(linkCloudinary);
+            }
+        }
+
+        if (jogo.getId() == null || jogo.getId().toString().isEmpty()) {
             jogoService.inserirJogo(jogo);
         } else {
             jogoService.atualizarJogo(jogo);
@@ -155,25 +146,5 @@ public class MenuController {
 
         model.addAttribute("jogos", listaDeJogos);
         return "index";
-    }
-
-    @GetMapping("/imagem/{nomeArquivo}")
-    public ResponseEntity<Resource> serveImagem(@PathVariable String nomeArquivo) throws IOException {
-        Path path = Paths.get(UPLOAD_DIR).resolve(nomeArquivo);
-        
-        if (!Files.exists(path)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Resource resource = new FileSystemResource(path);
-        String contentType = Files.probeContentType(path);
-        
-        if (contentType == null) {
-            contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(resource);
     }
 }
